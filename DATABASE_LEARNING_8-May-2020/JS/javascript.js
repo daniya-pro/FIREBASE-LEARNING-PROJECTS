@@ -1,16 +1,3 @@
-//addresses: 21 Greens Road RD 2 Ruawai 0592. Partial addresses: Main Highway Otaki; 32 Wilson Street."
-
-/* var student={first_Name:"Noemie", last_name:"Moen", jobTitle:"Principal Solutions Representative",prrefix:"Mrs.", suffix:"DVM",  title:"Forward Branding Specialist",
-/*  job_descripter:"District",
-  jobarea:"Paradigm",
-  jobType:"Officer"
-city:"North Veldamouth"
-country:"<"
-address:"960 Lucie Mission"
-phone-no:"654-654-2575"
-* }*/
-
-
 var p1 = document.getElementById("p1")
 var p2 = document.getElementById("p2")
 var p3 = document.getElementById("p3")
@@ -26,9 +13,10 @@ var phonesEL = document.getElementById("phones")
 var countriesEL = document.getElementById("countries")
 
 
-function onclicks() {
+function onclicks(id) {
     try{
-    var n = true
+  
+var n = true
     var e = true
     var ci = true
     var a = true
@@ -107,7 +95,17 @@ function onclicks() {
             phone_no: phones.trim(),
             contry: countries,
         }
-        sub(data)
+    var b = document.getElementById("subb")
+    b.innerText=`Submit Form`
+    b.setAttribute("onclick",`onclicks()`)
+
+        namesEL.value =""
+emailsEL.value=""
+citiesEL.value=""
+addresesEL.value=""
+phonesEL.value=""
+countriesEL.value=""
+sub(data,id)
 
     }
     else{console.error("e=> ",e  ," co=> ", co ,"ci=> " , ci ,"n=> " , n ,"p=> " , p  ,"a=> ", a )
@@ -120,15 +118,17 @@ catch(err){
 
     console.log(err)
 
-}}
+}}//sub(sdfg)sub(data,)
 function sub(data,id=null) {
 var s =document.getElementById("subb")
 var sp =document.getElementById("spi")
 sp.style.display=""
 s.style.display="none"
-    database().ref(`formData/${id}`)[id?"set":"push"](data)
 
-    //(formdata/null).push(data)    
+    database().ref(`${id?`formData/${id}`:"formData"}`)[id?"set":"push"](data)
+   //database().ref(`formData/id`).set(data)
+
+ // database().ref(`formData`).push(data)
         
         
         
@@ -136,15 +136,16 @@ s.style.display="none"
             s.style.display=""
            sp.style.display="none"
             p7.style.color = "green"
-            p7.innerHTML = `<h1 style="color:green">successfully submitted. </h1>`
+            id?p7.innerHTML = `<h1 style="color:green">successfully updated.</h1>`:p7.innerHTML = `<h1 style="color:green">successfully submitted. </h1>`
+            
         })
         .catch(function (err) {
             s.style.display=""
             sp.style.display="none"
-            err.message ? alert(err.message) : console.error("err=> ", err)
+            err.message ? console.warn(err.message) : console.error("err=> ", err)
             p7.style.color = "red"
             p7.innerHTML = err.message ? err.message : 'An error occurred'
-        })
+             })
 
 }
 
@@ -175,27 +176,6 @@ if(DivId){
 }
 }
 catch(err){console.error(err)}}
-function onChange(d) {
-    try {
-        var data = d.val() 
-               var key = d.key
-
-        var hi = `${data.name.replace(" ", "_")}`
-
-        console.log("changed==>> \n\n", data, "d.email==>>", data.email)
-        var li = document.getElementById(hi+"s");
-        li.innerHTML =`<li id="${hi+ "'s"}name2">Name:${data.name}</li> 
-        <li id="${hi+"'s"}email">Email:${data.email}</li> 
-        <li id="${hi+"'s"}city">City:${data.city}</li> 
-        <li id="${hi+"'s"}address">Address:${data.address}</li> 
-        <li id="${hi+"'s"}phone_no">Phone number:${data.phone_no}</li> 
-        <li id="${hi+"'s"}country">Country:${data.contry}</li>`
-   
-    } catch (err) {
-        console.error(err)
-        console.log("hello")
-    }
-}
 
 
 
@@ -246,7 +226,7 @@ function onData(data) {
 <button class="btn btn-outline-info" id="${key+"but2"}" data-toggle="tooltip" data-placement="top" title="Click Here To See Less" style="display:none" onclick="seeless('${hi}s','${key+"but2"}','${key+"but"}')">See Less </button>
 
 
-<button class="btn btn-outline-success" id="${key}b" data-toggle="tooltip" data-placement="top" title="Click Here To Update the details" onclick="add('${d.name} ',' ${d.phone_no} ', '${d.address}',' ${d.city} ', '${d.contry} ', '${d.email}')">Update</button>
+<button class="btn btn-outline-success" id="${key}b" data-toggle="tooltip" data-placement="top" title="Click Here To Update the details" onclick="add('${d.name} ',' ${d.phone_no} ', '${d.address}','${d.city} ', '${d.contry} ', '${d.email}','${key}but','${key}','${data}')">Update</button>
 
 
 
@@ -315,19 +295,21 @@ ol.appendChild(parentDiv)
 getdata()
 
 function removeData(id){
+    p7.innerHTML=''
 
 database().ref(`/formData/${id}`).remove()
-
 
 }
 
 
 function seeMore(non, butn, buton) {
     try {
+        p7.innerHTML=''
+
         var buton = document.getElementById(`${buton}`)
         var btn = document.getElementById(`${butn}`)
         var span = document.getElementById(`${non}`)
-        span.style.display = "block"
+        span.style.display = ""
         btn.style.display = "none"
         buton.style.display = ""
 
@@ -339,6 +321,7 @@ function seeMore(non, butn, buton) {
 
 function seeless(non, butn, buton) {
     try {
+        p7.innerHTML=''
         var btn = document.getElementById(`${butn}`)
         var buton = document.getElementById(`${buton}`)
         var span = document.getElementById(`${non}`)
@@ -346,15 +329,17 @@ function seeless(non, butn, buton) {
         btn.style.display = "none"
         buton.style.display = ""
     } catch (errrrrr) {
-        alert(errrrrr)
+        console.error(errrrrr)
     }
 }
 
 
 
 
-function add(na, ph, ad, ci, co, em) {
+function add(na, ph, ad, ci, co, em,btn,key,data) {
+
     try {
+        p7.innerHTML=""
         scrollTo(0,0)
         // alert(na+" , "+em+" , "+ph+" , "+ad+" , "+ci+" , "+co+" , "+em)
         emailsEL.value = em;
@@ -363,27 +348,69 @@ function add(na, ph, ad, ci, co, em) {
         phonesEL.value = ph;
         countriesEL.value = co;
         namesEL.value = na;
-
-
+     var b = document.getElementById("subb")
+    b.innerText=`Update Form`
+    b.setAttribute("onclick",`onclicks('${key}')`)
 
     } catch (err) {
 
-        alert(err)
+        console.error(err)
 
     }
 }
 
 function erase() {
     try {
+        p7.innerHTML=''
         emailsEL.value = "";
         citiesEL.value = "";
         addresesEL.value = "";
         phonesEL.value = "";
         countriesEL.value = "";
         namesEL.value = "";
+        var b = document.getElementById("subb")
+b.innerText=`Submit Form`
+    b.setAttribute("onclick",`onclicks()`)
     } catch (err) {
 
         console.error(err)
 
+    }
+}
+function onChange(d) {
+    try {
+        p1.innerHTML=""
+        p2.innerHTML=""
+        p3.innerHTML=""
+        p4.innerHTML=""
+        p5.innerHTML=""
+        p6.innerHTML=""
+        var data = d.val() 
+               var key = d.key
+
+        var hi = key
+var sup = document.getElementById(`${key}b`)
+var lin = document.getElementById(`${key}name`)
+if(lin){
+
+lin.innerHTML=data.name
+
+}
+if(sup){ 
+sup.setAttribute("onclick",`add('${data.name} ',' ${data.phone_no} ', '${data.address}','${data.city} ', '${data.contry} ', '${data.email}','${key}but','${key}')`)
+}
+console.log("changed==>> \n\n", data, "d.email==>>", data.email)
+        var li = document.getElementById(`${hi}s`);
+        if(li){
+        li.innerHTML =`<li id="${hi+ "s"}name2">Name:${data.name}</li> 
+        <li id="${hi+"'s"}email">Email:${data.email}</li> 
+        <li id="${hi+"'s"}city">City:${data.city}</li> 
+        <li id="${hi+"'s"}address">Address:${data.address}</li> 
+        <li id="${hi+"'s"}phone_no">Phone number:${data.phone_no}</li> 
+        <li id="${hi+"'s"}country">Country:${data.contry}</li>` 
+        }else{console.error("ul not found=>> ",key,d.key)}
+    } catch (err) {
+        console.error(err)
+        console.log("hello")
     }
 }
