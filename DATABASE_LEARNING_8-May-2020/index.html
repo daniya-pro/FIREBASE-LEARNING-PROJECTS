@@ -5,15 +5,17 @@
     <link href="">
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
-    <script src="./JS/firebaseInit.js"></script>
-    <link rel="stylesheet" href="./bootstrap-4.0.0-alpha.6-dist/css/bootstrap.min.css">
+    <script src="./JS/firebaseInit.js"></script>    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../bootstrap-4.4.1/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="CSS/css.css">
 
 </head>
 
 <body>
   <div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
+    <div class="spinner-border mycssloding" id="loading" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
@@ -38,7 +40,13 @@
         <input type="text" name="country_name" id="countries">
         <p id="p6" class="p01" style="color: red;"></p>
         <button class="b2" onclick="erase()">Clear Form</button>        
-        <button class="b1" onclick="onclicks()">Submit Form</button>
+        <button class="b1" id="subb" onclick="onclicks()">Submit Form</button> 
+        </button>
+        <button class="b1" id="spi" type="button"  style="display: none;" disabled>
+          <span class="spinner-grow spinner-grow-sm" style="width: 0.8rem!important;
+          height: 0.8rem!important;" role="status" aria-hidden="true"></span>
+          Loading...
+        </button>
         
         <p id="p7" class="p01"></p>
     </form>
@@ -51,10 +59,9 @@
 
 
     <script src="./JS/javascript.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="./JS/tether.min.js"></script>
-    <script src="./bootstrap-4.0.0-alpha.6-dist/js/bootstrap.min.js"></script>
+    <script src="../bootstrap-4.4.1/js/bootstrap.min.js"></script>
 
 
 </body>

@@ -82,7 +82,8 @@ function onclicks() {
         a = true
         p4.innerHTML = ""
     }
-    if (!RegexPhon.test(phones)) {
+    if (!RegexPhon.test(phones.trim())) {
+
         p5.innerHTML = "please write a valid number"
         p = false
     } else {
@@ -103,7 +104,7 @@ function onclicks() {
             email: emails,
             city: cities,
             address: addreses,
-            phone_no: phones,
+            phone_no: phones.trim(),
             contry: countries,
         }
         sub(data)
@@ -120,26 +121,26 @@ catch(err){
     console.log(err)
 
 }}
+function sub(data,id=null) {
+var s =document.getElementById("subb")
+var sp =document.getElementById("spi")
+sp.style.display=""
+s.style.display="none"
+    database().ref(`formData/${id}`)[id?"set":"push"](data)
 
-function sub(data) {
-
-    database().ref(`formData/${data.name}`)
-        .set(data)
+    //(formdata/null).push(data)    
+        
+        
+        
         .then(function () {
+            s.style.display=""
+           sp.style.display="none"
             p7.style.color = "green"
-            p7.innerHTML = `
-<h1 style="color:green">successfully submitted following info:- </h1>
-    Name: ${data.name}<br>
-    Email: ${data.email}<br> 
-    City: ${data.city}<br>
-    Address: ${data.address}<br>
-    Phone no: ${data.phone_no}<br>
-    country: ${data.contry}<br>
-     
-     `
+            p7.innerHTML = `<h1 style="color:green">successfully submitted. </h1>`
         })
         .catch(function (err) {
-
+            s.style.display=""
+            sp.style.display="none"
             err.message ? alert(err.message) : console.error("err=> ", err)
             p7.style.color = "red"
             p7.innerHTML = err.message ? err.message : 'An error occurred'
@@ -164,8 +165,10 @@ function getdata() {
 }
 function onRemove(d){
     try{
+        var key = d.key
+
 var data = d.val()
-var DivIdReg=data.name.replace(/\s/g,"_")+"_div"
+var DivIdReg=key
 var DivId = document.getElementById(DivIdReg)
 if(DivId){
     DivId.remove()
@@ -174,8 +177,9 @@ if(DivId){
 catch(err){console.error(err)}}
 function onChange(d) {
     try {
+        var data = d.val() 
+               var key = d.key
 
-        var data = d.val()
         var hi = `${data.name.replace(" ", "_")}`
 
         console.log("changed==>> \n\n", data, "d.email==>>", data.email)
@@ -199,11 +203,15 @@ function onChange(d) {
 
 
 function onData(data) {
+    
     try {
-        
+        var lo = document.getElementById("loading")
+        lo.style.display ="none"
         var d = data.val()
+        var key = data.key
+        console.log(key)
         var parentDiv = document.createElement("DIV")
-        var parentDivId=d.name.replace(/\s/g,"_")+"_div"
+        var parentDivId=key
             parentDiv.setAttribute("id",parentDivId)
         var disc;
         disc += d.name + "," + d.email + "," + d.city + "," + d.address + "," + d.phone_no + "," + d.contry + "$"
@@ -211,38 +219,38 @@ function onData(data) {
         // var firstd =disc.slice(0,disc.indexOf("$"))
         // var secd =disc.slice(disc.indexOf("$"),disc.length)
         var i = 0
-// 
+
         console.log(disc.slice(0, disc.indexOf("$")))
 
         var ol = document.getElementById("ol")
-        var hi = `${d.name.replace(" ", "_")}`
+        var hi = `${key}`
 
         parentDiv.innerHTML = `
-<li id="${d.name.replace(" ", "_") + "'s"}name">${d.name}</li> 
+<li id="${key}name">${d.name}</li> 
 
 
-<button class="btn btn-outline-secondary" id="${d.name.replace(" ", "_") + "but"}" data-toggle="tooltip" data-placement="top" title="Click Here To See More" onclick="seeMore('${hi}s','${d.name.replace(" ", "_") + "but"}','${d.name.replace(" ", "_") + "but2"}')">See More
+<button class="btn btn-outline-secondary" id="${key}but" data-toggle="tooltip" data-placement="top" title="Click Here To See More" onclick="seeMore('${hi}s','${key+"but"}','${key+"but2"}')">See More
 </button>   
      
 
-<ul id="${d.name.replace(" ", "_")}s" style="display:none">
-<li id="${d.name.replace(" ", "_") + "'s"}name2">Name:${d.name}</li> 
-<li id="${d.name.replace(" ", "_") + "'s"}email">Email:${d.email}</li> 
-<li id="${d.name.replace(" ", "_") + "'s"}city">City:${d.city}</li> 
-<li id="${d.name.replace(" ", "_") + "'s"}address">Address:${d.address}</li> 
-<li id="${d.name.replace(" ", "_") + "'s"}phone_no">Phone number:${d.phone_no}</li> 
-<li id="${d.name.replace(" ", "_") + "'s"}country">Country:${d.contry}</li>
+<ul id="${key}s" style="display:none">
+<li id="${key}name2">Name:${d.name}</li> 
+<li id="${key}email">Email:${d.email}</li> 
+<li id="${key}city">City:${d.city}</li> 
+<li id="${key}address">Address:${d.address}</li> 
+<li id="${key}phone_no">Phone number:${d.phone_no}</li> 
+<li id="${key}country">Country:${d.contry}</li>
 </ul>
 
 
-<button class="btn btn-outline-info" id="${d.name.replace(" ", "_") + "but2"}" data-toggle="tooltip" data-placement="top" title="Click Here To See Less" style="display:none" onclick="seeless('${hi}s','${d.name.replace(" ", "_") + "but2"}','${d.name.replace(" ", "_") + "but"}')">See Less </button>
+<button class="btn btn-outline-info" id="${key+"but2"}" data-toggle="tooltip" data-placement="top" title="Click Here To See Less" style="display:none" onclick="seeless('${hi}s','${key+"but2"}','${key+"but"}')">See Less </button>
 
 
-<button class="btn btn-outline-success" id="${d.name.replace(" ", "_")}b" data-toggle="tooltip" data-placement="top" title="Click Here To Update the details" onclick="add('${d.name} ',' ${d.phone_no} ', '${d.address}',' ${d.city} ', '${d.contry} ', '${d.email}')">Update</button>
+<button class="btn btn-outline-success" id="${key}b" data-toggle="tooltip" data-placement="top" title="Click Here To Update the details" onclick="add('${d.name} ',' ${d.phone_no} ', '${d.address}',' ${d.city} ', '${d.contry} ', '${d.email}')">Update</button>
 
 
 
-<button class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Click Here To Delete the information" onclick="removeData('${d.name}')">Delete</button>`
+<button class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Click Here To Delete the information" onclick="removeData('${key}')">Delete</button>`
 
 
 ol.appendChild(parentDiv)
@@ -324,7 +332,7 @@ function seeMore(non, butn, buton) {
         buton.style.display = ""
 
     } catch (errrrrr) {
-        alert(errrrrr)
+        console.error(errrrrr)
     }
 }
 
