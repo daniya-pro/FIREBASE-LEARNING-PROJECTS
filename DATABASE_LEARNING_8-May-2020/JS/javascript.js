@@ -296,7 +296,6 @@ getdata()
 
 function removeData(id){
     p7.innerHTML=''
-
 database().ref(`/formData/${id}`).remove()
 
 }
