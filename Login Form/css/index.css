@@ -1,0 +1,19 @@
+body{font-family: as !important;
+}
+
+@font-face{
+
+font-family: as;
+src: url(../../font/Manrope-ExtraBold.ttf);
+
+}
+ #margin{   
+        margin-top: 378px;
+    }
+@media only screen and (max-width: 600px) {
+    #margin{   
+        margin-top: 378px;
+    }
+    
+   
+}
