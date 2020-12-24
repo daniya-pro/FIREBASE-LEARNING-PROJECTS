@@ -1,0 +1,51 @@
+body{font-family: a;}
+@font-face{
+font-family: a;
+src: url(../../../LEARNING-PRACTICE/font/Manrope-ExtraBold.ttf);
+}
+.mycssloding{
+    display: block;
+    position: fixed;
+    
+    margin: 170px 0;
+    width: 160px;
+    height: 160px;
+} 
+button{
+    color: white;
+    font-weight: 900;
+    background: black;
+    font-size: xx-small;
+}
+.b1{
+    border: 3px solid cyan;
+
+}
+.b2{
+
+    border: 3px solid red;
+
+}
+.b3{
+    border:3px solid gold;
+    
+}
+.b4{
+    border: 3px solid chartreuse;
+}
+.b5{
+
+    border: 3px solid darkmagenta;}
+.b6{
+
+    border: 3px solid darkgrey;}
+.b7{
+
+    border: 3px solid deeppink;
+
+}
+input{
+
+    display: block;
+
+}
